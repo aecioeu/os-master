@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@adiwajshing/baileys": "^4.4.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -33,7 +32,6 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pdf-to-printer": "^5.3.0",
-    "puppeteer": "^16.0.0",
     "qrcode-terminal": "^0.12.0",
     "request": "^2.88.2",
     "session-file-store": "^1.5.0",
