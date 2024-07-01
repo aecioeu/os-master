@@ -19,6 +19,8 @@ const { json } = require('body-parser');
 
 router.post('/check', async function (req, res) {
 
+  console.log('Checando')
+
   const body = req.body
   const number = body.number.toString().replace(/\D/g, "")
 
