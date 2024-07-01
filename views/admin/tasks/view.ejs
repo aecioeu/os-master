@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+
+<html lang="pt-br" data-textdirection="ltr">
+<%- include("../partials/header") %>
+
+<!-- BEGIN: Body-->
+<style>
+    .only-print{
+      display: none;
+    }
+
+  @media print {
+
+    .only-print{
+      display: block;
+    }
+
+    body{
+      color: #000 !important;
+    }
+    .select2 , .tasks_notes{
+      display: none !important
+    }
+
+    [data-bs-target="#offcanvasRight"]{
+      display: none !important
+
+    }
+    body{
+      margin-left: 0px;
+    }
+
+    .noprint{
+      display: none !important;
+    }
+
+    .border-right{
+      border-right: 1px solid #ebeef5 !important;
+    }
+    hr:not([size]) {
+    height: 1px;
+    }
+
+  
+
+    .table > :not(:last-child) > :last-child > * {
+    border-bottom-color: #ebeef5;
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ebeef5;
+    border-radius: 47px;
+}
+
+    hr {
+    margin: 1.5rem 0;
+    height: 10px;
+    border-bottom: 1px solid #ebeef5 !important;
+    
+    color: #000 !important;
+    background-color: #fff;
+    border: 0;
+    opacity: 1;
+}
+    [data-bs-target="#offcanvasRight"]{
+      display: none !important
+
+    }
+    body{
+      margin-left: 0px;
+    }
+
+
+
+  }
+
+  .offcanvas-end{
+
+    width: 40vw;
+  }
+
+  div#offcanvasBottom{
+  height: 50vh;
+ }
+ .message{
+  padding: 2.5rem 3rem  !important
+ }
+  
+</style>
+
+<body data-sidebar-size="default" data-layout-width="fluid" data-layout-menu-position="fixed" data-sidebar-color="light" data-sidebar-showuser="false" data-topbar-color="light">
+  <!-- Begin page -->
+  <div id="wrapper">
+
+    <%- include("../partials/nav") %>
+    <%- include("../partials/menu") %>
+
+      
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+      <div class="content">
+     
+       
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasTopLabel">
+          <div class="offcanvas-header  mb-0 pb-0">
+              <h5 id="offcanvasRightLabel">INSERIR SERVIÇO</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+
+            <label class="form-label fs-13 mt-2 mb-1">PATRIMÔNIO</label>
+            <h5 class="text-dark fs-17 mb-0 patrimonio_ref">
+              
+            </h5>
+          
+            <form action="#" id="services" method="post" class="parsley-examples">
+
+              <div class="mb-1 row">
+                
+                <div class="col-lg-12">
+               
+                  <select class="form-select" style="display:none" name="ref_patrimonio">
+                   
+                 
+                  </select>
+                </div>
+              </div>
+
+               <!-- end row -->
+            <div class="mb-1 row">
+              <div class="col-lg-12">
+                <label class="form-label fs-13 mt-2 mb-1">SERVIÇO EXECUTADO</label>
+
+
+
+                <select class="form-select" name="service" data-plugin="select_service">
+                </select>
+
+              </div>
+
+
+            </div>
+
+           
+
+
+              <div class="mb-1 row">
+                                         <div class="col-lg-12">
+                  <label class="form-label fs-13 mt-2 mb-1" for="destino">OBSERVAÇÃO</label>
+                     <textarea class="form-control" rows="3" name="service" id="service"></textarea>
+                </div>
+              </div>
+
+              
+              <div class="mt-3 mb-1">
+                <div class="text-end d-print-none">
+                  <button type="submit" class="btn btn-primary btn-block w-100 mb-0"><i class="uil uil-focus-add mr-2"></i>Inserir serviço</button>
+                   
+
+                   
+                </div>
+              </div>
+
+            </form>
+            
+          </div>
+      </div>
+
+ <!-- FINALIZAR TAREFA-->
+
+ 
+       
+       
+       
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+          <!-- start page title -->
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box">
+                <h4 class="page-title">Tarefa #<%- data.task_id %>
+                </h4>
+                <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Tarefas</a></li>
+
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end page title -->
+
+          <div class="row">
+            <div class="col-xl-8">
+              <div class="card">
+
+                <div class="card-body">
+
+                  <%if(assigned == false){%>
+
+                    
+                  <span onclick="check('Quer assumir esta tarefa ?','/tasks/invite/<%-data.task_id-%>')" class="noprint alert btn btn-primary d-block mb-2 bold"><span class="btn-shine">ASSUMIR TAREFA</span></span>
+        
+                  <%}%>
+                  <%if(data.status == "archive"){%>
+                  <div class="alert alert-danger" role="alert">
+                    Essa tarefa está arquivada
+                   </div>
+                    <%}%>
+
+
+                  
+
+                  <ul class="nav nav-pills navtab-bg nav-justified p-1" id="pills-tab" role="tablist">
+
+                    <li class="nav-item">
+                      <a class="nav-link active" id="pills-tasks-tab" data-bs-toggle="pill" href="#pills-tasks" role="tab" aria-ntrols="pills-tasks" aria-selected="false">
+            
+                        <%if(data.status == "new") { %>
+                          TAREFA ABERTA
+                          <%}%>
+                          <%if(data.status == "pendding") { %>
+                           TAREFA EM ANDAMENTO
+                            <%}%>
+
+                          <%if(data.status == "complete") { %>
+                           TAREFA CONCLUIDA
+                            <%}%>
+
+                            <%if(data.status == "archive") { %>
+                              TAREFA ARQUIVADA
+                               <%}%>
+                      </a>
+                    </li>
+                  
+                    <li class="nav-item">
+                      <a class="nav-link " id="pills-activity-tab" data-bs-toggle="pill" href="#pills-activity" role="tab" aria-controls="pills-activity" aria-selected="true">
+                        ATIVIDADE
+                      </a>
+                    </li>
+
+                 
+                  </ul>
+
+                  <div class="tab-content" id="pills-tabContent">
+
+
+              
+                    <div class="tab-pane fade active show" id="pills-tasks" role="tabpanel" aria-labelledby="pills-tasks-tab">
+                      <div class="only-print">
+                      <%-include('../partials/components/header-cpd.ejs') %> 
+                      <hr class="mt-2 mb-2">
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-8 border-right">
+                          <!--  <h3 class="mt-1 logo-lg-text-dark"><img src="/img/logo-sm.svg" alt height="24"> CPD</h3>
+                                <small class="mt-1">
+                                  Av. Joaquim Gomes Pererira, 823<br>
+                                  Centro, Lagoa da Prata<br>
+                                  Contato: (37) 3262 5903
+                                </small>-->
+                          
+
+                          <span class="fs-13 mt-2 mb-1">
+                            SOLICITANTE</span>
+
+                          <div class="task-box mb-1">
+
+                            <h5 class="text-dark fs-17 mb-0">
+                              <%-data.registration%> - <%-data.name%>
+                            </h5>
+                            <small><span class="text-dark float-end"><%- data.phone %></span></small>
+                            <p class="text-dark text-truncate mb-0"><span class="badge badge-soft-secondary mt-1">
+                                <%-data.role%>
+                              </span></p>
+
+                          </div>
+
+
+                        </div> <!-- end col -->
+
+                        <div class="col-sm-4">
+
+                          <!--<%if(data.status == "new") { %>
+                            <div class="badge bg-dark">TAREFA ABERTA</div>
+                            <%}%>
+                            <%if(data.status == "pendding") { %>
+                              <div class="badge bg-dark">TAREFA EM ANDAMENTO</div>
+                              <%}%>
+
+                            <%if(data.status == "complete") { %>
+                              <div class="badge bg-dark">TAREFA CONCLUIDA</div>
+                              <%}%>-->
+
+
+                         
+
+
+                             
+                 
+                          <div class="text-md-start">
+                          
+                            <h4 class="bold">
+                              <i class="uil uil-clipboard-alt"></i>
+                              <%-data.task_id-%>
+                            </h4>
+                          
+
+                           
+                            <span class="text-muted">
+                              ⏱️
+                              <span class="created_time mb-1"><%-data.created_task%></span>
+                              
+                          <%if(data.priority == "2") { %>
+                            <div class="badge bg-success float-end"><i class="uil uil-stopwatch"></i>Prioridade Normal</div>
+                            <%}%>
+                            <%if(data.priority == "3") { %>
+                              <div class="badge bg-primary float-end"><i class="uil uil-stopwatch"></i>Prioridade Baixa</div>
+                              <%}%>
+
+                            <%if(data.priority == "1") { %>
+                              <div class="badge bg-danger float-end"><i class="uil uil-stopwatch"></i>Prioridade Alta</div>
+                              <%}%>
+
+                            </span>
+                          </div>
+                        </div> <!-- end col -->
+                       
+                      </div>
+                      <hr class="mt-2 mb-2">
+
+                      <div class="row">
+                        <div class="col-sm-7 border-right">
+
+                          <div class="">
+
+
+                            <span class="fs-13 mt-2 mb-1 ">
+                              PROBLEMA RELATADO</span>
+                            <br>
+
+                            <div class="task-box mb-0">
+                              <p class="text-dark mb-0 fs-16">
+                                <%-data.description%>
+                              </p>
+                            </div>
+
+
+
+                          </div>
+
+
+
+                        </div>
+                        <div class="col-sm-5">
+
+                          <span class="fs-13 mt-2 mb-1 "><i class="uil uil-map-pin-alt text-dark"></i>
+                            LOCAL</span>
+                          <div class="task-box mb-2">
+                            <p class="text-dark fs-17 bold  text-truncate mb-0">
+                              <%-data.location%>
+                            </p>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                      <%if(task_tecnico.length >0){%>
+                        
+                        <div class="row">
+                          <div class="col-md-12">
+                            <hr class="mt-2 mb-2">
+                            <span class="fs-12 mt-2 mb-1 bold">
+                              Técnicos:
+                            
+                            </span>
+
+                            <% task_tecnico.forEach((tecnico, index) => { %>
+                              <span class="badge badge-soft-secondary fs-13"><%-tecnico.name%></span>
+                            <%})%>
+  
+                       
+                             
+  
+                          </div> <!-- end col -->
+                          <hr class="mt-2 m-2">
+  
+  
+  
+                        </div>
+                     
+
+                        <%}%>
+
+                       
+
+                  
+
+
+                  
+
+
+                      <!-- end row -->
+                    
+                      <div class="mb-1 mt-2 row">
+                        <div class="col-lg-12">
+                          <h5 class="mt-2 bold">PATRIMONIO E SERVIÇOS</h5>
+                          <%if(data.status != "complete" && data.status != "archive"){%>
+                          <select class="form-select" name="servidor" data-plugin="select_patrimonio">
+                          </select>
+                          <%}%>
+                        </div>
+
+
+                      </div>
+
+                    
+
+                      <div class="row">
+                        <div class="col-12">
+
+
+
+                          <table id="patrimonio_vinculado" class="table mt-1 table-centered">
+                            <thead>
+                              <tr>
+                                <th style="width: 15%" class="fs-13">PLAQUETA</th>
+                                <th class="fs-13">DESCRIÇÃO</th>
+                                <!-- <th style="width: 10%">Hours</th>
+                                                                    <th style="width: 10%">Hours Rate</th>
+                                                                    <th style="width: 10%" class="text-end">Total</th>-->
+                              </tr>
+                            </thead>
+
+                          </table>
+
+                        </div> <!-- end col -->
+                      </div>
+                      <!-- end row -->
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="info-box">
+
+                            <span class="fs-13 mt-2 mb-1">
+                              INFORMAÇÕES DA TAREFA</span>
+                           
+                            <ul class="list-inline mb-0">
+                              <%if(data.notification == 'on') { %>
+                              <li class="list-inline-item pr-2">
+                               
+                                  <div class="badge bg-success fs-13">Solicitante será notificar via Whatsapp</div>
+                            
+                         
+                              </li>
+                              <%}%>
+                           
+                            </ul>
+                          
+
+                            </div>
+                            
+
+                        
+                     
+                           
+
+                        </div> <!-- end col -->
+                   
+
+
+
+                      </div>
+
+                     
+
+                      <div class="mt-3 mb-1">
+                        <div class="text-end d-print-none">
+                          <%if(data.status != "complete"){%>
+                          <a href="javascript:window.print()" class="float-start btn btn-primary">
+                            <i class="uil uil-print me-1"></i> Imprimir Tarefa</a><%}%>
+                           
+                           
+                            <a href="/tasks/edit/<%-data.task_id-%>" class="btn btn-soft-dark">Editar Tarefa</a>
+
+                            <%if(assigned == true && data.status != "complete"){%>
+                              <%if(data.type != "out"){%>
+                                <button class="btn btn-primary" type="button" onclick="check('<%-user.name%>, ao finalizar está tarefa, o solicitante, será notificado via whatsapp e a tarefa será <b>concluida</b>, e ficara aguardando a retirada dos patrimônios no CPD.', '/tasks/complete/<%-data.task_id-%>')">Finalizar Tarefa</button>
+                            
+                              <% } else if(data.status != "archive") {  %>
+                                    <button type="button" onclick="check('<%-user.name%>, tem certeza que deseja concluir esta tarefa ?', '/tasks/archive/<%-data.task_id-%>')" class="btn btn-danger">Concluir e Arquivar Tarefa</button>
+                                 
+    
+                                 <%}%>
+                             
+                              <%}  else if(data.status == "complete") {%>
+
+                                <a href="/tasks/takeaway/<%-data.task_id-%>" class="btn btn-success">Realizar Entrega</a>
+                             
+                                                      
+                                <%} %>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+         
+
+
+                <div class="tab-pane fade " id="pills-activity" role="tabpanel" aria-labelledby="pills-activity-tab">
+                  <h4 class="header-title mb-4">ATIVIDADES</h4>
+                  <div class="left-timeline mt-3 mb-3 ps-3">
+                    <ul class="list-unstyled events mb-0 history">
+
+
+
+                    </ul>
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div> <!-- end col -->
+
+
+          </div>
+          <!-- end row -->
+
+        </div> <!-- container -->
+
+     
+
+      <div class="col-xl-4 tasks_notes">
+        <div class="card">
+
+          <div class="card-body">
+
+            <h4 class="header-title mb-1">OBSERVAÇÕES</h4>
+
+            <%if(data.status != "archive"){%>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="clearfix pt-2">
+                   
+
+                    <form action="#" id="notes" method="POST" class="comment-area-box">
+                      
+                      <div class="d-flex">
+                      <div class="m-1 me-2 flex-shrink-0 flex-shrink-0">
+                            <a href="#"> 
+                                <img class="d-flex-object rounded-circle avatar-sm" alt="" src="/img/profile/<%-user.profile%>"> 
+                            </a>
+                        </div>
+
+                        <div class="flex-grow-1">
+
+              
+                     
+                          <textarea rows="2" id="description" class="mentions form-control border-0 resize-none" placeholder="Digite aqui .."></textarea>
+                          <div class="mt-2 bg-light blight-border">
+                            <div class="float-end">
+                              <button type="submit" id="sendnotes" class="btn btn-sm btn-success">
+                                Enviar como <%-user.name%> <i class="uil uil-message ml-1"></i>
+                              </button>
+                            </div>
+                            <div>
+                             
+                              <!--<a href="#" class="btn btn-sm px-1 btn-light">
+                                <i class="uil uil-at"></i>
+                              </a>-->
+                            </div>
+                          </div>
+                     
+                        </div>
+                      </div>
+
+
+                     
+                    </form>
+
+                    <!-- <small class="text-muted">
+                                All accounts are to be paid within 7 days from receipt of
+                                invoice. To be paid by cheque or credit card or direct payment
+                                online. If account is not paid within 7 days the credits details
+                                supplied as confirmation of work undertaken will be charged the
+                                agreed quoted fee noted above.
+                              </small>-->
+                  </div>
+                </div> <!-- end col -->
+
+              </div>
+              <!-- end row -->
+              <%}%>
+            <%if(assigned == "unknow"){%>
+               
+              
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <%-user.name%>, você não pode adicionar nenhuma nota a está tarefa.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+          <%}%>
+
+          <%if(data.status == "archive"){%>
+               
+              
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%-user.name%>, não é possivel adicionar notas pois está tarefa já foi arquivada.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+      <%}%>
+
+
+   
+     
+               
+
+                  <div class="chat-conversation">
+                    <ul class="conversation-list notes">
+                  
+
+                    </ul>
+
+      
+
+        </div>
+
+
+            </div>
+
+          </div>
+
+        </div> <!-- content -->
+
+    </div>
+   
+   
+ 
+
+    <%- include('../partials/footer') %>
+    <script src='/js/jquery-ui.js' type='text/javascript'></script>
+    <script src='/js/jquery.mentions.js' type='text/javascript'></script>
+    <link href="/css/ui.css" rel="stylesheet" type="text/css" id="app-default-stylesheet">
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/jquery.migrate.js"></script>
+
+
+    
+
+
+   
+   
+    <script>
+$(function () {
+//$('.mentions').mentionsInput('getMentions')
+  $('.mentions').mentionsInput({
+            source: <%- JSON.stringify(mentions) %>, 
+            showAtCaret: true,
+       
+        delay: 0,
+        trigger: '@',
+        autoFocus: true
+      
+});
+
+});
+
+
+
+
+
+
+          function newService(id){
+
+          //  $('#pills-service-tab').tab('show');
+          $(`[name="ref_patrimonio"] option[value="${id}"]`).prop('selected', true)
+          
+
+          $(`body .patrimonio_ref`).text($('[name="ref_patrimonio"] option:selected').text())
+       
+          $('html, body').animate({
+                    scrollTop: $('[name="ref_patrimonio"]').offset().top
+                }, 0);
+
+            $('[data-plugin="select_service"]').select2('open');
+
+          
+
+          }
+
+
+function waranty(start){
+  
+    
+
+                    if( moment().diff(start, 'days') >= 365){
+                         return `<label class="badge badge-soft-danger">Sem Garantia</label>`
+                    }else{
+                         return `<label class="badge badge-soft-success">Equipamento em Garantia</label>`
+                    }
+
+}
+
+function list_service(services){
+
+  if(services){
+
+    var tpl ='<h6 class="fs-13 mt-0 mb-1 mt-2">SERVIÇO EXECUTADO.</h6>'
+
+    services.forEach(function(item, index) {
+  
+     tpl += `<p class="text-muted fs-13 m-0 ">${moment(item.service_created).format('DD/MM/YYYY HH:mm')} - ${item.service}</p> `
+     if(item.description){
+      tpl +=`<p class="text-muted fs-12 m-0 "><strong>OBSERVAÇÃO: </strong>${item.description}</p>`
+     }
+
+    })
+
+    return tpl
+
+
+  }else{
+    return ""
+  }
+
+ 
+
+
+
+
+
+}
+
+function remove_service(services){
+
+if(services){
+
+  var tpl ='<h6 class="m-2 fs-13 mt-0 mb-1 mt-2">REMOVER SERVIÇO EXECUTADO.</h6>'
+
+  services.forEach(function(item, index) {
+  
+   tpl += `
+   <a href="javascript:void(0);" onclick="deleteService('${item.id}', '<%- data.task_id %>')" class="dropdown-item text-danger">
+                                                    <i class="uil uil-trash me-2"></i>${moment(item.created).format('DD/MM/YYYY')} - ${item.service} </a>`
+
+  })
+
+  return tpl
+
+
+}else{
+  return ""
+}
+
+
+
+
+
+
+
+}
+
+function serviceButtom(registration){
+if(`<%-data.status%>` != 'complete' &&  `<%-data.status%>` != 'archive' && `<%-data.status%>` != 'new')  return `<button onclick="newService('${registration}')" class="btn btn-sm btn-primary float-end" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasTop">+ Serviço</button>`
+return ``
+}
+
+    
+
+
+      var table_ = $('#patrimonio_vinculado').DataTable({
+        ajax: "/api/tasks/patrimonio/<%- data.task_id %>",
+        responsive: true,
+        ordering: false,
+        searching: false,
+        language: {
+        emptyTable: "Nenhum patrimônio vinculado."
+    },
+        paging: false,
+        bInfo: false,
+        columns: [{
+           "className": "text-center" ,
+            "data": "registration",
+            render: function(data, type, row) {
+              return `<h6 class="fs-16 mt-0 mb-1">${row.registration}</h6><label class="badge badge-soft-primary">${row.situacao}</label>`;
+            }
+          },
+          {
+            "data": "name",
+            render: function(data, type, row) {
+              return `
+                            <div class="dropdown align-self-center float-end">
+                              
+                                            <a href="#" class="ml-2 dropdown-toggle arrow-none text-muted" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="uil uil-ellipsis-v"></i>
+                                            </a>
+                                            
+                                            <div class="dropdown-menu dropdown-menu-end" style="">
+                                              
+                                                <a href="javascript:void(0);" onclick="deletePatrimonio('${row.id}', '<%- data.task_id %>')" class="dropdown-item text-danger">
+                                                    <i class="uil uil-trash me-2"></i>APAGAR PATRIMÔNIO - ${row.name}
+                                                   
+
+                                                </a>
+                                                ${ (row.status == 'pendding') ? `${remove_service(row.services)}` : ``}
+                                               
+                                    
+                                            </div>
+                                        </div>
+                                          ${serviceButtom(row.registration)}
+                                       
+                            <h6 class="fs-15 mt-0 mb-1">${row.name} ${waranty(row.data_aquisicao)}</h6>
+                            <p class="text-muted fs-12 mb-0"><i class="uil uil-map-pin-alt text-dark"></i>${row.centro_custo}</p>
+
+                            ${list_service(row.services)}
+
+                           
+                       
+                            `;
+
+            }
+          },
+        ],
+
+    fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) { 
+
+      
+    $('[name=ref_patrimonio]').append($('<option>', { 
+        value: aData.registration,
+        text : `${aData.registration} - ${aData.name}` 
+    }));
+
+
+
+        }
+      });
+
+      table_.on( 'preDraw', function () {
+              $("[name=ref_patrimonio] option").remove();
+
+      $('[name=ref_patrimonio]').append($('<option>', { 
+        value: '',
+        text : "Não" 
+      }));
+
+
+    
+} );
+
+
+      /**/
+
+
+
+      $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+       // console.log('asdasokd')
+      });
+
+
+      HistoryLoad('<%- data.task_id %>')
+      NotesLoad('<%- data.task_id %>')
+      $('.created_time').text(moment($('.created_time').text()).format('DD/MM/YYYY HH:mm'))
+      
+
+
+      /*SERVICOS*/
+
+      $('[data-plugin="select_service"]').select2({
+        dropdownParent: $('#offcanvasRight'),
+  
+    ajax: {
+        url: '/api/services/search?',
+        dataType: 'json',
+     
+            type: "GET",
+        processResults: function(data) {
+          return {
+            results: data
+          }
+        },
+        
+    },
+    templateResult: formatRepoService,
+    templateSelection: function(data) {
+            if (!data.id) {
+              return data.text;
+            }
+            return $(`<span>${data.id} - ${data.name}</span>`);
+          }
+          
+})
+
+
+        function formatRepoService(data) {
+
+          console.log(data)
+
+          //console.log(data)
+          if (data.loading) {
+            return data.text;
+          }
+
+  //        $("#destiny").text(data.location)
+            $("#service").val(data.phone)
+
+          var $tpl = $(`
+              <div class="p-1">
+                  <h5 class="mt-1 mb-1"><span class="text-dark bold repository__name">${data.id} - ${data.name}</span>
+                  </div>
+          `)
+
+
+
+          return $tpl;
+          }
+
+      /*PATRIMONIO*/
+     
+
+      $('[data-plugin="select_patrimonio"]').select2({
+          ajax: {
+            url: '/api/patrimonio/search?',
+            dataType: 'json',
+            type: "GET",
+            allowClear: true,
+            placeholder: "Busque pela Placa do Patrimônio ...",
+            minimumInputLength: 3,
+            processResults: function(data) {
+              return {
+                results: data
+              };
+            },
+          },
+          templateResult: formatRepo,
+          templateSelection: function(data) {
+            if (!data.id) {
+              return data.text;
+            }
+            return $(`<span>${data.registration} - ${data.name}</span>`);
+          },
+        })
+
+        .on('select2:open', function(e) {
+          //document.querySelector('.select2-search__field').focus();
+        })
+
+
+        .on('select2:select', function(e) {
+          var data = e.params.data;
+         
+          data.task_id = '<%- data.task_id %>'
+
+          $.ajax({
+            url: "/tasks/create/patrimonio",
+            type: "post",
+            data: data,
+            success: function(response) {
+
+              $('#patrimonio_vinculado').DataTable().ajax.reload();
+              console.log("Carregando o Patrimonio vinculado")
+              $('[data-plugin="select_patrimonio"]').val('').trigger('change')
+
+              HistoryLoad('<%- data.task_id %>')
+
+              
+
+              // You will get response from your PHP page (what you echo or print)
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(textStatus, errorThrown);
+            }
+          });
+
+
+        });
+
+        //$('.select2-selection--single').append(`<span class="m-2">Busque pela Placa do Patrimônio ...</span>`)
+
+
+      function formatRepo(data) {
+
+        //console.log(data)
+        if (data.loading) {
+          return data.text;
+        }
+
+        $("#destiny").text(data.location)
+        $("#contato").val(data.phone)
+
+        var $tpl = $(`
+            <div class="p-1">
+                <span class="location"><i class="uil uil-map-pin-alt text-dark"></i><span class="badge badge-soft-primary" style="margin-left:5px;">${data.centro_custo}</span></span>
+                <h5 class="mt-1 mb-1"><span class="text-dark bold repository__name">${data.registration} ${data.name}</span>
+                <br><span class="badge badge-soft-secondary mt-1">${data.situacao}</span> </h5>                                   
+            </div>
+    `)
+
+
+
+        return $tpl;
+      }
+
+
+
+
+      function TplHistory(data){
+        $(".history li").remove()
+          data.forEach(function(item, index) {
+            
+            $(".history").append(
+              `   <li class="event-list">
+                          <div class="pb-4">
+                            <div class="d-flex">
+                              <div class="event-date text-center me-4 flex-shrink-0">
+                                <div class="bg-soft-primary p-1 rounded text-primary fs-14 created" time="${item.created}"></div>
+                              </div>
+                              <div class="flex-grow-1">
+                                <h6 class="fs-15 mt-0 mb-1">
+                                  ${item.title}
+                                </h6>
+                                <p class="text-muted fs-14">
+                                  ${item.description}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </li>`
+            );
+          });
+
+}
+
+function Tplnotes(data){
+  
+        $(".notes li").remove()
+          data.forEach(function(item, index) {
+
+           // console.log(moment(item.date).fromNow())
+
+
+            $('.notes').append(`<li class="position-relative">
+                                                    <hr>
+                                                    <h4><span class="badge bg-light text-dark position-absolute top-0 start-50 translate-middle">${item.date}</span></h4>
+                                                </li>`)
+
+
+
+            item.notes.forEach(function(notes, index2) {
+
+              $(".notes").append(
+              ` <li class="clearfix">
+                                            <div class="chat-avatar">
+                                                <img src="/img/profile/${notes.profile}" alt="user">
+                                                <i>${moment(notes.note_created).format('HH:mm')}</i>
+                                                
+                                            </div>
+                                            <div class="conversation-text">
+                                                <div class="ctext-wrap">
+                                                    <i class="fs-15">${notes.tecnico_name}</i>
+                                                    <p class="fs-14">${notes.description}</p>
+                                                </div>
+                                                
+                                                
+                                            </div>
+                </li>`
+            );
+            
+            })
+
+            /*
+
+
+
+            
+            */
+          });
+
+}
+
+      function HistoryLoad(task_id) {
+        $.ajax({
+          type: "GET",
+          url: `/api/tasks/history/${task_id}`,
+          // dataType: "json", 
+          //contentType: "application/json; charset=utf-8",
+          success: function(response) {
+            TplHistory(response)
+            timeFromNow()
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+
+        })
+
+
+      }
+
+      function NotesLoad(task_id) {
+        $.ajax({
+          type: "GET",
+          url: `/api/tasks/notes/${task_id}`,
+          // dataType: "json", 
+          //contentType: "application/json; charset=utf-8",
+          success: function(response) {
+
+           if(response) Tplnotes(response)
+            //TplHistory(response)
+          //  timeFromNow()
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+
+        })
+
+
+      }
+
+
+      $("#services").submit(function(e) {
+        e.preventDefault();
+
+           
+        var data = {
+          task_id: '<%- data.task_id %>',
+          id_service: $('[data-plugin="select_service"]').select2('data')[0].name, 
+          id_patrimonio: $('[name="ref_patrimonio"]').val(),
+          description: $("textarea#service").val()
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `/tasks/services`,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(data),
+          success: function(response) {
+
+            if(response.status == 'added'){
+
+              
+
+              $('#patrimonio_vinculado').DataTable().ajax.reload();
+              //$('#pills-tasks-tab').tab('show');
+              //Reseta o select
+              
+              
+              $('[data-plugin="select_service"]').val('').trigger('change')
+              $('#offcanvasRight').offcanvas('hide');
+
+              HistoryLoad('<%- data.task_id %>')
+             // $(`[name="ref_patrimonio"] option[value="${id}"]`).prop('selected', true)
+             setTimeout(() => {
+              $('html, body').animate({
+                    scrollTop: $('#patrimonio_vinculado').offset().top
+                }, 0);
+             }, 300);
+
+             
+           
+
+            
+
+              //patrimonio_vinculado_wrapper
+
+              //alert("Nota inserida.")
+              //$("textarea#description").val('')
+             // NotesLoad('<%- data.task_id %>')
+            }
+
+            
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+
+        })
+
+
+
+
+
+    })
+
+
+
+      $("#notes").submit(function(e) {
+        e.preventDefault();
+
+           
+        var data = {
+          task_id: '<%- data.task_id %>',
+          description: $("textarea#description").val()
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `/tasks/note`,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(data),
+          success: function(response) {
+
+            if(response.status == 'added'){
+              //alert("Nota inserida.")
+              $("textarea#description").val('')
+              NotesLoad('<%- data.task_id %>')
+            }
+
+            
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+
+        })
+
+
+
+
+
+    })
+
+      
+
+      function timeFromNow() {
+        $('[time]').each(function(i, obj) {
+
+          $(this).text(moment($(this).attr("time")).fromNow())
+
+        });
+      }
+
+      timeFromNow()
+      setInterval(() => {
+        timeFromNow()
+      }, 1000);
+
+      function deletePatrimonio(id_patrimonio, task_id) {
+
+        var data = {
+          id: id_patrimonio,
+          task_id: task_id
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `/api/patrimonio/delete`,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(data),
+          success: function(response) {
+            $('#patrimonio_vinculado').DataTable().ajax.reload();
+            HistoryLoad('<%- data.task_id %>')
+
+            //Se a solicitação for feita com sucesso, a resposta representará os dados
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+
+        })
+      }
+
+
+      function deleteService(id_service, task_id) {
+
+        //deleteService('${item.id}', '<%- data.task_id %>')
+
+        var data = {
+          id: id_service,
+          task_id: task_id
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `/api/services/delete`,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(data),
+          success: function(response) {
+            $('#patrimonio_vinculado').DataTable().ajax.reload();
+            HistoryLoad('<%- data.task_id %>')
+
+            //Se a solicitação for feita com sucesso, a resposta representará os dados
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+
+        })
+        }
+
+    </script>
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

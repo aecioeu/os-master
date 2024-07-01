@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+<html lang="pt-br" data-textdirection="ltr">
+<%- include("../partials/header") %>
+
+<!-- BEGIN: Body-->
+<style>
+  @page {
+  size: A4;
+  margin: 15px;
+}
+  @media print {
+
+    body{
+      color: #000 !important;
+    }
+    .select2 , .tasks_notes{
+      display: none !important
+    }
+    .not-print{
+      display: none;
+    }
+
+    .border-right{
+      border-right: 1px solid #ebeef5 !important;
+    }
+    hr:not([size]) {
+    height: 1px;
+    }
+
+  
+
+    .table > :not(:last-child) > :last-child > * {
+    border-bottom-color: #ebeef5;
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ebeef5;
+    border-radius: 47px;
+}
+
+    hr {
+    margin: 1.5rem 0;
+    height: 10px;
+    border-bottom: 1px solid #ebeef5 !important;
+    
+    color: #000 !important;
+    background-color: #fff;
+    border: 0;
+    opacity: 1;
+}
+    [data-bs-target="#offcanvasRight"]{
+      display: none !important
+
+    }
+    body{
+      margin-left: 0px;
+    }
+
+.header{
+  margin-top: 0.75rem !important;
+}
+
+  }
+
+  .offcanvas-end{
+
+    width: 40vw;
+  }
+
+  div#offcanvasBottom{
+  height: 50vh;
+ }
+ .message{
+  padding: 2.5rem 3rem  !important
+ }
+  
+</style>
+
+<body data-sidebar-size="default" data-layout-width="fluid" data-layout-menu-position="fixed" data-sidebar-color="light" data-sidebar-showuser="false" data-topbar-color="light">
+  <!-- Begin page -->
+  <div id="wrapper">
+
+
+
+      
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+      <div class="content">
+      
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+          <!-- start page title -->
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box">
+                <h4 class="page-title">Entrega de Patrimonio
+                </h4>
+             
+              </div>
+            </div>
+          </div>
+          <!-- end page title -->
+
+          <div class="row">
+            <div class="col-xl-8">
+              <div class="card">
+
+                <div class="card-body">
+
+         
+
+          
+                  <div class="row header">
+                    <div class="col-sm-8 ">
+                      <h3 class="mt-1 logo-lg-text-dark"><img src="/img/logo-sm.svg" alt height="24"> CPD</h3>
+                      <small class="mt-1">
+                        Centro de Processamento de Dados
+                      </small>
+                     
+                   </div>
+
+                   <div class="col-sm-4 ">
+                     <small class="mt-1">
+                      Av. Joaquim Gomes Pererira, 823<br>
+                      Centro, Lagoa da Prata<br>
+                      Contato: (37) 3262 5903
+                    </small>
+                   
+                 </div>
+              
+
+               
+                  </div>
+                  <hr class="mt-2 mb-2">
+                      <div class="row">
+                        <div class="col-sm-8 border-right">
+                          <!--  <h3 class="mt-1 logo-lg-text-dark"><img src="/img/logo-sm.svg" alt height="24"> CPD</h3>
+                                <small class="mt-1">
+                                  Av. Joaquim Gomes Pererira, 823<br>
+                                  Centro, Lagoa da Prata<br>
+                                  Contato: (37) 3262 5903
+                                </small>-->
+                        
+                         
+
+                          <span class="fs-13 mt-2 mb-1">
+                            SOLICITANTE</span>
+
+                          <div class="task-box mb-1">
+
+                            <h5 class="text-dark fs-17 mb-0">
+                              <%-data.registration%> - <%-data.name%> <span class="text-dark"><%- data.phone %></span>
+                            </h5>
+                          
+
+                          </div>
+
+
+                        </div> <!-- end col -->
+
+                        <div class="col-sm-4">
+
+                          <%if(data.status == "new") { %>
+                            <div class="badge bg-dark">TAREFA ABERTA</div>
+                            <%}%>
+                            <%if(data.status == "pendding") { %>
+                              <div class="badge bg-dark">TAREFA EM ANDAMENTO</div>
+                              <%}%>
+
+                            <%if(data.status == "complete") { %>
+                              <div class="badge bg-dark">TAREFA CONCLUIDA</div>
+                              <%}%>
+
+
+                         
+
+
+                             
+                 
+                          <div class="text-md-start">
+                          
+                            <h4 class="bold">
+                              <i class="uil uil-clipboard-alt"></i>
+                              <%-data.task_id-%>
+                            </h4>
+                          
+
+                           
+                            <span class="text-muted">
+                              ⏱️
+                              <span class="created_time mb-1"><%-data.created_task%></span>
+                              
+                         
+
+                            </span>
+                          </div>
+                        </div> <!-- end col -->
+                        
+                      </div>
+                      <hr class="mt-2 mb-2">
+
+                      <div class="row">
+                        <div class="col-sm-7 border-right">
+
+                          <div class="">
+
+
+                            <span class="fs-13 mt-2 mb-1 ">
+                              PROBLEMA RELATADO</span>
+                            <br>
+
+                            <div class="task-box mb-0">
+                              <p class="text-dark mb-0 fs-16">
+                                <%-data.description%>
+                              </p>
+                            </div>
+
+
+
+                          </div>
+
+
+
+                        </div>
+                        <div class="col-sm-5">
+
+                          <span class="fs-13 mt-2 mb-1 "><i class="uil uil-map-pin-alt text-dark"></i>
+                            LOCAL</span>
+                          <div class="task-box mb-2">
+                            <p class="text-dark fs-17 bold  text-truncate mb-0">
+                              <%-data.location%>
+                            </p>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+                      <%if(task_tecnico.length >0){%>
+                        
+                        <div class="row">
+                          <div class="col-md-12">
+                            <hr class="mt-2 mb-2">
+                            <span class="fs-13 mt-2 mb-1">
+                              TÉCNICOS:
+                            
+                            </span>
+
+                            <% task_tecnico.forEach((tecnico, index) => { %>
+                              <span class="badge badge-soft-secondary fs-13"><%-tecnico.name%></span>
+                            <%})%>
+  
+                       
+                             
+                            <hr class="mt-2 mb-0">
+                          </div> <!-- end col -->
+                         
+  
+  
+  
+                        </div>
+                     
+
+                        <%}%>
+
+                  
+
+
+                  
+
+
+                      <!-- end row -->
+                      <div class="mb-0 row">
+                        <div class="col-lg-12">
+                          <h5 class="mt-2 bold">PATRIMONIO E SERVIÇOS</h5>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-12">
+
+
+
+                          <table id="patrimonio_vinculado" class="table mt-1 table-centered">
+                            <thead>
+                              <tr>
+                                <th style="width: 15%" class="fs-13">PLAQUETA</th>
+                                <th class="fs-13">DESCRIÇÃO</th>
+                                <!-- <th style="width: 10%">Hours</th>
+                                                                    <th style="width: 10%">Hours Rate</th>
+                                                                    <th style="width: 10%" class="text-end">Total</th>-->
+                              </tr>
+                            </thead>
+
+                          </table>
+
+                        </div> <!-- end col -->
+                      </div>
+                      <!-- end row -->
+                      <%if(taskSign != false){%>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                            <div class="clearfix">
+                                <h6 class="text-muted">Termo de Recebimento e Retirada:</h6>
+
+                                <small class="text-muted">
+                                    Eu, <%-taskSign[0].sign_name.toUpperCase()%></pan> confirmo que recebi os patrimônios acima identificados, por ser verdade firmo o presente, Lagoa da Prata, <span class="date"></span>.
+                                </small>
+                            </div>
+                        </div> <!-- end col -->
+                        <div class="col-sm-6">
+                            <div class="mt-4 text-center">
+                                <p><span class="fw-medium m-0 font-dark">____________________________________________</span> </p>
+                                <p><h6 class="fs-15 mt-0 mb-1"><%-taskSign[0].sign_name.toUpperCase()%></h6></p>
+                               
+                            </div>
+                            <div class="clearfix"></div>
+                        </div> <!-- end col -->
+                        <div class="col-sm-6">
+                          <div class="mt-4 text-center">
+                              <p><span class="fw-medium m-0 font-dark">____________________________________________</span> </p>
+                              <p><h6 class="fs-15 mt-0 mb-1"><%-data.name.toUpperCase()%> - C.P.D</h6></p>
+                             
+                          </div>
+                          <div class="clearfix"></div>
+                      </div> <!-- end col -->
+                    </div>
+                 
+                     
+                      
+                      <%}else{%>
+
+                        <!-- end row -->
+                      <div class="mb-1 row not-print">
+                        <div class="col-lg-8">
+                          <h5 class="mt-2 bold">RECEBEDOR</h5>
+
+                           <select class="form-select" name="servidor" data-plugin="select_servidores" required>
+                              </select>
+
+                        </div>
+
+                        <div class="col-lg-4">
+                          <h5 class="mt-2 bold">Whatsapp</h5>
+
+                      
+                            
+                              <div class="input-group">
+                                <div class="input-group-text">?</div>
+                                <input type="text" class="form-control contato" name="contato" id="contato" pattern="\d+((\(|)|-)\d+)?" inputmode="numeric" placeholder="" parsley-trigger="change" required  >
+                            </div>
+
+                        </div>
+
+
+                      </div>
+                        
+                        
+                        <div class="row">
+                          <div class="col-sm-12">
+                              <div class="clearfix">
+                                  <h6 class="text-muted">Termo de Recebimento e Retirada:</h6>
+  
+                                  <small class="text-muted">
+                                      Eu, <span class="name"></span></pan> confirmo que recebi os patrimônios acima identificados, por ser verdade firmo o presente, Lagoa da Prata, <span class="date"></span>.
+                                  </small>
+                              </div>
+                          </div> <!-- end col -->
+                          <div class="col-sm-6">
+                              <div class="mt-4 text-center">
+                                  <p><span class="fw-medium m-0 font-dark">____________________________________________</span> </p>
+                                  <p><h6 class="fs-15 mt-0 mb-1"><span class="name"></span></h6></p>
+                                 
+                              </div>
+                              <div class="clearfix"></div>
+                          </div> <!-- end col -->
+                          <div class="col-sm-6">
+                            <div class="mt-4 text-center">
+                                <p><span class="fw-medium m-0 font-dark">____________________________________________</span> </p>
+                                <p><h6 class="fs-15 mt-0 mb-1"><%-user.name.toUpperCase()%> - C.P.D</h6></p>
+                               
+                            </div>
+                            <div class="clearfix"></div>
+                        </div> <!-- end col -->
+                      </div>
+
+                        <%}%>
+                     
+
+                     
+
+                      <div class="mt-3 mb-1">
+                        <div class="text-end d-print-none">
+                          <a href="javascript:window.print()" class=" btn btn-primary">
+                            <i class="uil uil-print me-1"></i> Imprimir Termo de Entrega</a>
+                                               
+                                  
+    
+                        </div>
+                      </div>
+
+
+                    </div>
+
+        
+
+          
+
+
+          </div>
+          <!-- end row -->
+
+        </div> <!-- container -->
+
+     
+
+   
+
+    </div>
+
+  
+ 
+
+    <%- include('../partials/footer') %>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/wp.init.js"></script>
+    <script src="/js/masked.js"></script>
+
+    
+
+    <script>
+
+$('.created_time').text(moment($('.created_time').text()).format('DD/MM/YYYY HH:ss'))
+$('.date').text(moment().format('LL'))
+
+
+
+var table_ = $('#patrimonio_vinculado').DataTable({
+        ajax: "/api/tasks/patrimonio/<%- data.task_id %>",
+        responsive: true,
+        ordering: false,
+        searching: false,
+        language: {
+        emptyTable: "Nenhum patrimônio vinculado."
+    },
+        paging: false,
+        bInfo: false,
+        columns: [{
+           "className": "text-center" ,
+            "data": "registration",
+            render: function(data, type, row) {
+              return `<h6 class="fs-16 mt-0 mb-1">${row.registration}</h6>`;
+            }
+          },
+          {
+            "data": "name",
+            render: function(data, type, row) {
+              return `
+                     
+                                        
+                                       
+                            <h6 class="fs-15 mt-0 mb-1">${row.name}</h6>
+                            <p class="text-muted fs-12 mb-0"><i class="uil uil-map-pin-alt text-dark"></i>${row.centro_custo}</p>
+
+                            ${list_service(row.services)}
+
+                           
+                       
+                            `;
+
+            }
+          },
+        ]
+
+
+      });
+    
+
+      function list_service(services){
+
+if(services){
+
+  var tpl ='<h6 class="fs-13 mt-0 mb-1 mt-2">SERVIÇO EXECUTADO.</h6>'
+
+  services.forEach(function(item, index) {
+
+   tpl += `<p class="text-muted fs-13 m-0 ">${moment(item.service_created).format('DD/MM/YYYY HH:mm')} - ${item.service}</p> `
+   if(item.description){
+    tpl +=`<p class="text-muted fs-12 m-0 "><strong>OBSERVAÇÃO: </strong>${item.description}</p>`
+   }
+
+  })
+
+  return tpl
+
+
+}else{
+  return ""
+}
+
+
+
+
+
+
+
+}
+
+$(document).on('select2:open', () => {
+            document.querySelector('.select2-search__field').focus();
+        });
+
+
+  var select = $('[data-plugin="select_servidores"]').select2({
+    ajax: {
+      url: '/api/servidores/search?',
+      dataType: 'json',
+      data: function (params) {
+        var query = {
+          term: params.term
+        }
+
+        // Query parameters will be ?search=[term]&type=public
+        return query;
+      },
+      type: "GET",
+      placeholder: "Buscar ...",
+      minimumInputLength: 3,
+ 
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+    },
+    templateResult: formatRepo,
+    templateSelection: function (data) {
+        if (!data.id) {
+          return data.text;
+        }
+        return $(`<span>${data.registration} - ${data.name}</span>`);
+      },
+  })
+
+  .on('select2:open', function (e) {
+    document.querySelector('.select2-search__field').focus();
+  })
+
+
+  .on('select2:select', function (e) {
+      var data = e.params.data;
+     
+      $('.name').text(data.name)
+     
+       var contato = $("#contato").val(data.phone).mask("(99) 99999-999?9")
+       checkWhatsapp(data.phone)
+  });
+
+
+$(document).ready(function() {
+
+if($(".contato")){
+
+  $('.contato').inputmask("mask", {
+    "mask": "(99) 99999-9999",
+    showMaskOnFocus: true,
+    showMaskOnHover: false,
+    autoUnmask: true,
+    clearMaskOnLostFocus: true
+});
+
+
+/*$(".contato").mask("(99) 9999-9999?9").focusout(function(event) {
+  var target, phone, element;
+  target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+  phone = target.value.replace(/\D/g, '');
+  element = $(target);
+  element.unmask();
+  if (phone.length > 10) {
+      element.mask("(99) 99999-999?9");
+      checkWhatsapp(phone)
+  } else {
+      element.mask("(99) 9999-9999?9");
+  }
+});*/
+}
+
+});
+
+
+
+
+function formatRepo(data) {
+
+//console.log(data)
+if (data.loading) {
+  return data.text;
+}
+
+
+
+var $tpl = $(`
+            <div class="p-1">
+                <span class="location"><i class="uil uil-map-pin-alt text-dark"></i><span class="badge badge-soft-primary" style="margin-left:5px;">${data.location}</span></span>
+                <h5 class="mt-1 mb-1"><span class="text-dark bold repository__name">${data.registration} ${data.name}</span>
+                <br><span class="badge badge-soft-secondary mt-1">${data.role}</span> </h5>                                   
+            </div>
+    `)
+
+
+
+return $tpl;
+}
+
+
+async function  requestPermission(){
+/*
+await sendMessage({
+     type: "text",
+     message: `Você confirma a retirada de `,
+     from: '553788555554@s.whatsapp.net',
+   })*/
+   
+if($('[data-plugin="select_servidores"]').select2('data')[0] == undefined){
+  
+ 
+  bootbox.alert("Você deve identificar quem está recebendo!", function(){ 
+    $('[data-plugin="select_servidores"]').select2('open');
+});
+
+} else if ($('[name="contato"]').length <= 9){
+  
+  
+  bootbox.alert("Você deve informar um numero de contato de quem está recebendo!", function(){ 
+    $('[name="contato"]').focus(0)
+});
+
+}else{
+
+  bootbox.confirm({
+    message: "<b>tem certeza que quer concluir esta tarefa ?",
+    buttons: {
+        confirm: {
+            label: 'Sim',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'Não, não tenho certeza.',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+        if(result){
+
+          //registrar quem esta assinando e finalizar como assinatura em papel
+          bootbox.alert("Aguarde alguns segundos para que o Termo de Entrega seja impresso");
+
+          var data = {
+          task_id: '<%- data.task_id %>',
+          id_servidor : $('[data-plugin="select_servidores"]').select2('data')[0].id,
+          sign_registration: $('[data-plugin="select_servidores"]').select2('data')[0].registration, 
+          sign_name: $('[data-plugin="select_servidores"]').select2('data')[0].name, 
+          sign_phone: $('[name="contato"]').val(),
+          sign_whatsapp: '',
+          sign_type: 'papper',
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `/tasks/sign`,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(data),
+          success: function(response) {
+
+            if(response.status == 'signed'){
+              window.location.href = '/tasks/archive/<%-data.task_id-%>'
+            }
+
+          },
+          error: function(errMsg) {
+            alert(errMsg);
+          }
+
+        })
+
+
+
+
+          
+        }
+    }
+});
+  
+}
+
+  
+
+}
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

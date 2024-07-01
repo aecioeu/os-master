@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="pt-br" data-textdirection="ltr">
+<%- include("partials/header") %>
+<link href="/css/flatpickr.min.css" rel="stylesheet" type="text/css">
+    <style>
+        tbody,
+        td,
+        tfoot,
+        th,
+        thead,
+        tr {
+            padding: 0px 0px !important;
+            border-width: 0 !important;
+        }
+
+        tr.odd,
+        tr.evan {
+            border: none !important;
+            border-style: none !important;
+            border-color: inherit !important;
+
+            border-width: 0 !important;
+        }
+    </style>
+
+
+
+    <!-- BEGIN: Body-->
+
+    <body data-sidebar-size="default" data-layout-width="fluid" data-layout-menu-position="fixed"
+        data-sidebar-color="light" data-sidebar-showuser="false" data-topbar-color="light">
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <%- include("partials/nav") %>
+                <%- include("partials/menu") %>
+
+                    <!-- ============================================================== -->
+                    <!-- Start Page Content here -->
+                    <!-- ============================================================== -->
+
+                    <div class="content-page">
+                        <div class="content">
+
+                            <div class="container-fluid">
+                                <input type="hidden" id="status" name="status" value="<%-status%>">
+
+                                <!-- start page title -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="page-title-box">
+                                            <h4 class="page-title">
+                                                <%if (status == 'new') { %>Tarefas Novas <% } %>
+                                                <%if (status == 'pendding') { %>Tarefas Pendentes <% } %>
+                                                <%if (status == 'complete') { %>Tarefas Concluidas <% } %>
+                                                <%if (status == 'archive') { %>Tarefas Arquivadas <% } %>
+                                                </h4>
+                                            <div class="page-title-right">
+                                             
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-block">
+                                            <div class="float-lg-end">
+                                                <div class="d-lg-flex align-items-center mb-2 mt-0">
+                                                    <div class="file-search d-inline-block me-1">
+                                                        <form>
+                                                            <div class="input-group align-items-center">
+                                                                <i class="bi bi-search icon-search bg-light ms-2"></i>
+                                                                <input type="text" id="busca" class="form-control search-input bg-light border-0 mt-0" placeholder="Buscar Tarefa ou Patrimônio">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="btn-group mb-0">
+                                                        <form>
+                                                            <div class="input-group align-items-center">
+                                                               
+                                                                <input type="text" id="range-datepicker" class=" form-control flatpickr-input bg-light active border-0 mt-0" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                                            </div>
+                                                        </form>
+                                                    </div> 
+
+                                                  
+                                                </div>
+                                            </div>
+                                       
+                                            <div class="btn-group mb-2">
+                                               
+                                                <a href="/tasks/create" class="btn btn-light">
+                                                    <i class="uil-plus me-2"></i> Criar Tarefa
+                                                </a>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+
+                                <!-- end page title -->
+
+                                <!-- tasks panel -->
+                                <div class="row tarefas chat-conversation mt-2">
+                                    
+                                    <div class="load spinner-border text-primary m-2 justify-content-center"
+                                        role="status">
+                                        <span class="visually-hidden">Carregando...</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div> <!-- content -->
+
+                    </div>
+
+                    <%- include('partials/footer') %>
+                    <script src="/js/flatpickr.min.js"></script>
+                    <script src="/js/pt.js"></script>
+                    
+                    <script type="module" src="/js/tasks_archive.init.js?v=<%-Date.now()%>"></script>
+
+
+
+
+
+
+    </body>
+    <!-- END: Body-->
+
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="pt-br" data-textdirection="ltr">
+<%- include("../partials/header") %>
+
+
+
+  <!-- BEGIN: Body-->
+
+  <body data-sidebar-size="default" data-layout-width="fluid" data-layout-menu-position="fixed"
+    data-sidebar-color="light" data-sidebar-showuser="false" data-topbar-color="light">
+    <!-- Begin page -->
+    <div id="wrapper">
+
+      <%- include("../partials/nav") %>
+        <%- include("../partials/menu") %>
+
+          <!-- ============================================================== -->
+          <!-- Start Page Content here -->
+          <!-- ============================================================== -->
+
+          <div class="content-page">
+            <div class="content">
+
+              <div class="container-fluid">
+
+                <div class="col-xl-12">
+
+
+                  <!-- start page title -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="page-title-box">
+                        <h4 class="page-title">Editar Tarefa</h4>
+                        <div class="page-title-right">
+                          <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dasboard</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Nova Tarefa</a></li>
+
+                          </ol>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end page title -->
+
+                  <div class="row">
+                    <div class="col-xl-10 mb-md-0 mb-2">
+                      <div class="card">
+                        <div class="card-body">
+
+
+                          <%if( data.status == "archive"){%>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                              Essa tarefa está arquivada                              
+                          </div> 
+      
+                            <%}%>
+
+                        
+
+                        <!--  <h4 class="header-title mt-0">NOVA TAREFA NO CPD</h4>
+                          <p class="sub-header">
+                            Indique com o maximo de clareza o objetivo desta tarefa, descreva com <code>atençao</code> .
+                          </p>-->
+
+                          <form action="/tasks/edit" method="post" class="parsley-examples">
+
+                            <input type="hidden" class="form-control" name="task_id" id="task_id" placeholder="" parsley-trigger="change" required value="<%-data.task_id%>" >
+
+
+                          <div class="row custom-options-checkable mb-3">
+                            <div class="col-md-6 mb-md-0 mb-2">
+                              <input class="custom-option-item-check" id="out_Radio" type="radio"
+                                name="tipo" value="out" checked="">
+                              <label for="out_Radio" class="custom-option-item px-2 py-2">
+                                <span class="d-flex align-items-center mb-50">
+                                  <span class="custom-option-item-title h4 ml-1">SUPORTE AO USUÁRIO</span>
+                                </span>
+                                <span class="d-block text-muted fs-12 mb-0 mt-1 box-text">Serviços prestrados externamente e
+                                  atividades prestadas fora do CPD.</span>
+                              </label>
+                            </div>
+                            <div class="col-md-6 mb-md-0 mb-2">
+                              <input class="custom-option-item-check" id="in_Radio" type="radio"
+                                name="tipo" value="in">
+                              <label for="in_Radio" class="custom-option-item px-2 py-2">
+                                <span class="d-flex align-items-center mb-50">
+                                
+                                  <span class="custom-option-item-title h4 ml-1">PATRIMÔNIO PARA MANUTENÇÃO</span>
+                                </span>
+                                <span class="d-block text-dark text-muted fs-12 mb-0 mt-1 box-text">Recebimento de equipamentos
+                                  no CPD, para manutenções diversas.</span>
+                              </label>
+                            </div>
+
+                            <!--<div class="col-md-12 mb-md-0 mb-2 mt-2">
+                              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                Essa opção é importante pois o solicitante sera notificado via whatsapp da situação da
+                                tarefa.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                  aria-label="Close"></button>
+                              </div>
+
+
+                            </div>-->
+
+
+
+
+                          </div>
+
+
+                          <div class="mb-1 row">
+                            <div class="col-lg-8" >
+                            <label class="form-label" for="servidor">Solicitante</label>
+
+                          
+                              <select class="form-select" name="servidor" data-plugin="select_servidores">
+                              </select>
+
+                            </div>
+                            <div class="col-lg-4">
+
+                            <label class="form-label" for="example-helping">Contato</label>
+                          
+                              <div class="input-group">
+                                <div class="input-group-text">?</div>
+                                <input type="text" class="form-control contato" name="contato" id="contato" pattern="\d+((\(|)|-)\d+)?" inputmode="numeric" placeholder="" parsley-trigger="change" required  >
+                            </div>
+                        
+                              <span class="help-block">
+                                <div class="form-switch mb-2">
+                                  <input type="checkbox" class="form-check-input" id="notify" name="notify"> 
+                                  <label class="form-check-label" for="notify">Notificar por Whatsapp</label>
+                              </div>
+
+                              <input type="hidden"  id="whatsapp" name="whatsapp" > 
+                               
+                              </span>
+
+                            </div>
+                        
+                          </div>
+
+                          <div class="mb-1 row">
+                            <div class="col-lg-6">
+                              <label class="form-label" for="destino">Local / Destino da Prestação de Serviço</label>
+                                 <textarea class="form-control" rows="3" name="destiny" id="destiny" required></textarea>
+                            </div>
+                     
+                            <div class="col-lg-6">
+                              <label class="form-label" for="destino">Descrição do Problema</label>
+                                 <textarea class="form-control" rows="3" name="problem" id="problem" required><%-data.description%></textarea>
+                            </div>
+                          </div>
+
+
+                          
+                                           
+                        
+                        
+                          <div class="mb-3 row">
+                          
+                            <div class="col-lg-6">
+                                <label class="form-label">Prioridade</label>
+                              <select class="form-select" name="priority">
+                                <option value="2">Normal (Concluidas de acordo com o fluxo de trabalho)</option>
+                                <option value="1">Alta (Concluida o mais breve possível)</option>
+                                <option value="3">Baixa</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <%if( data.status == "complete" || data.status == "archive"){%>
+                            
+                            <div class="mb-3 row">
+                          
+                              <div class="col-lg-12">
+                                <div class="custom-control custom-checkbox mb-2">
+                                  <input type="checkbox" class="custom-control-input" name="arquived"  id="arquived">
+                                  <label class="custom-control-label" for="arquived">Reabrir esta tarefa.</label>
+                              </div>
+                              </div>
+  
+  
+                            </div>
+      
+                            <%}%>
+
+
+                         
+
+                          <div class="row mb-0 justify-content-end">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-info">Salvar alterações</button>
+                            </div>
+                        </div>
+
+                        </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div> <!-- content -->
+
+          </div>
+
+          <%- include('../partials/footer') %>
+
+     <!-- Plugin js-->
+     <script src="/js/parsley.min.js"></script>
+     <script src="/js/masked.js"></script>
+     <script src="/js/wp.init.js"></script>
+     <script type="module" src="/js/tasks.init.js?v=<%-Date.now()%>"></script>
+
+     <script>
+
+$(document).ready(function () {
+  $('[data-plugin="select_servidores"]').select2("trigger", "select",
+      
+      {  data : {
+          "id": "<%-data.id%>",
+          "registration": "<%-data.registration%>",
+          "name": "<%-data.name%>",
+          "location": "<%-data.location%>",
+          "ve": "<%-data.ve%>",
+          "role": "<%-data.role%>",
+          "phone": "<%-data.phone%>",
+          "whatsapp": "<%-data.whatsapp%>",
+          "selected": true
+      }
+    })
+
+    let notification = '<%-data.notification%>'
+
+    $('[name="priority').val('<%-data.priority%>')
+    $(":radio[value=<%-data.type%>]").prop('checked',true);
+      if(notification == 'on') {
+        $("#notify").prop('checked',true);
+      }
+   
+});
+
+
+
+ 
+
+     </script>
+
+       
+  </body>
+  <!-- END: Body-->
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "root":"http://localhost",
+  "port" : 3001,
+  "pdf": {
+    "format": "A4",
+    "orientation": "portrait",
+    "border": "20mm",
+    "header": {
+      "height": "10mm",
+      "contents": ""
+    },
+    "footer": {
+      "height": "20mm",
+      "contents": {
+        "first": "",
+        "2": "", 
+        "default": "<span style=\"color: #444;\">{{page}}/{{pages}}</span>", 
+        "last": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+@media only screen and (max-width: 1600px) {
+	
+	#banner.full-screen-banner .text { padding:0 18%; }
+	
+}
+
+@media only screen and (max-width: 1400px) {
+	
+	#banner.full-screen-banner .text { padding:0 20%; }
+	
+}
+
+@media only screen and (max-width: 1250px) {
+
+	#banner .text { padding:8% 0; }
+	#banner.backend-search .text { padding:0; }
+	#banner .text.no-buttons { padding-bottom:7%; }
+	#banner.full-screen-banner .text { padding:0 15%; }
+	
+}
+
+@media only screen and (max-width: 875px) {
+
+	header#mobile-header { box-shadow:0 1px 40px rgba(0,0,0,0.15); }
+	header#mobile-header .logo { text-align:center; top:-13px; margin-left:0; }
+	header#mobile-header .logo.with-img { top:2px; margin-left:5%; }
+
+}
+
+@media only screen and (max-width: 850px) {
+	
+	#banner .search-box { box-shadow:none; }
+	#banner .button, #banner .button.solo, #banner .search-box, #banner .search-box.wider-search { display:block; width:100%; float:none; margin:7px 0; }
+
+}	
+	
+@media only screen and (max-width: 720px) {
+	
+	#ticket-title { padding:0 100px 0 0; font-size:19px; }
+	#banner .text { padding:10% 5%; }
+	
+	#banner .shell.tight { width:90% !important; }
+	#banner.full-screen-banner .text { width:100%; padding:0 10%; }
+	#banner .text.no-buttons { padding-bottom:3%; }
+	#banner .text h2 { font-size:30px; line-height:40px; }
+	#banner .text p { font-size:18px; line-height:30px; }
+
+}
+
+@media only screen and (max-width: 675px) {
+
+	#wpkraken-ticket-banner article h2 { width:100%; text-align:center; margin:0 0 20px; }
+	#wpkraken-ticket-banner article .wpkraken-icon { margin:0 auto 15px; float:none; font-size:60px; width:60px; text-align:center; }
+	#wpkraken-ticket-banner article a.button { display:block; width:100%; text-align:center; }
+
+}
+
+@media only screen and (max-width: 650px) {
+	
+	#banner .text h2, #banner .text p { display:none; }
+	#banner .search-box .search-button { display:none; }
+	#banner .search-box > input { text-align:center; }
+	
+	#banner .text h2 { font-size:18px; line-height:1.5; }
+	#banner .text p { font-size:15px; line-height:1.5; }
+
+	.ticksy-form .fields.centered { width:100%; }
+	.ticksy-form .button.large { font-size:13px; }
+
+}
