@@ -1,4 +1,4 @@
-/node_modules
 /sessions
+/node_modules
 /app/data
 /package-lock.json
